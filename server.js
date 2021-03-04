@@ -18,4 +18,5 @@ function newConnection(socket) {
     console.log('new connection: ' + socket.id);
 }
 
-// use socket.emit to send messages and socket.on to receive messages
+// use socket.emit to send messages and socket.on to receive message
+//test
