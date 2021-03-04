@@ -1,0 +1,22 @@
+{
+  "name": "space-invaders",
+  "version": "1.0.0",
+  "description": "space invaders",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.1",
+    "tone": "^14.7.77"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "space",
+    "invaders"
+  ],
+  "author": "Krijn Schelvis",
+  "license": "ISC"
+}
