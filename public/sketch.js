@@ -12,7 +12,6 @@ let rightPressed = false;
 let bullets = [];
 
 let monsters = [];
-let spawnInterval = setInterval(spawnHostile, 2000);
 
 let shipsImgState0 = [];
 let monstersImgState0 = [];
@@ -45,6 +44,8 @@ function setup() {
         stars[i] = new Star();
     }
 
+    socket.on('spawnHostileCue', spawnHostile);
+
     player = new Player();
 }
 
@@ -69,6 +70,7 @@ function draw() {
         monsters[m].show();
     }
 }
+
 
 function spawnHostile() {
 
