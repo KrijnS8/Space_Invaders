@@ -1,3 +1,4 @@
+
 let userNames = [];
 let users = [];
 let userAssets = [];
@@ -21,11 +22,10 @@ function newConnection(socket) {
 
     console.log(`Connected: ${socket.id}`);
 
-    let asset = Math.floor(Math.random() * 5);
-
-
+    // checks if chosen username is in use. If not in use, send to all clients that player joined
     socket.on('usernameRequest', (data) => {
 
+        let asset = Math.floor(Math.random() * 5);
         socket.emit(userNames.includes(data) ? 'usernameDeclined' : 'usernameAccepted', {
             username: data,
             asset: asset,
@@ -39,6 +39,8 @@ function newConnection(socket) {
             users.push(socket.id);
             userAssets.push(asset);
 
+            socket.broadcast.to(users[0]).emit('requestMonsters', socket.id);
+
             socket.broadcast.emit('newPlayerJoin', {
                 username: data,
                 asset: asset
@@ -47,12 +49,24 @@ function newConnection(socket) {
     });
 
 
+    // receives data from monsters and sends it to client
+    socket.on('monster', (data) => {
+        socket.broadcast.to(data.socketID).emit('monsterReceived', data);
+    });
+
+
+    // receives player location and sends it to all clients
     socket.on('playerLocationSend', (data) => {
 
         socket.broadcast.emit('playerLocationReceive', data);
     });
 
 
+    // receives shoot cue and sends it to all clients
+    socket.on('shootSend', (data) => { socket.broadcast.emit('shootReceive', data) });
+
+
+    // runs when player disconnects
     socket.on('disconnect', () => {
 
         console.log(`Disconnected: ${socket.id}`);
@@ -70,6 +84,5 @@ function newConnection(socket) {
     });
 }
 
+// sets interval for monster spawning
 let spawnInterval = setInterval(() => { io.sockets.emit('spawnHostileCue') }, 2000);
-
-// use socket.emit to send messages and socket.on to receive message

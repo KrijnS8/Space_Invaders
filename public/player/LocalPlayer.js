@@ -49,6 +49,7 @@ class LocalPlayer {
             this.y = 1080 - (this.size / 2);
         }
 
+        // sends location data
         socket.emit('playerLocationSend', {
             username: username,
             y: this.y,
@@ -58,6 +59,10 @@ class LocalPlayer {
 
     shoot() {
 
+        // creates new laser object
         bullets.push(new Laser(this.x, this.y));
+
+        // sends shoot cue
+        socket.emit('shootSend', username);
     }
 }

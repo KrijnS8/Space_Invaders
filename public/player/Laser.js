@@ -11,6 +11,7 @@ class Laser {
 
     show() {
 
+        // drawing section
         push();
         translate(this.x * xmp, this.y * ymp);
         fill(255, 0, 0, 70);

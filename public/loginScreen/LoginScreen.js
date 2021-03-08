@@ -12,14 +12,17 @@ class LoginScreen {
         this.usernameInp = createInput('');
         this.usernameInp.size(200, 20);
 
+        // detects if username has been declined or accepted
         socket.on('usernameDeclined', (data) => { console.log(`username ${data.username} has been declined!`); });
         socket.on('usernameAccepted', (data) => {
 
+            // sets username and creates local player object
             username = data.username;
             this.usernameInp.remove();
             localPlayer = new LocalPlayer(data.asset);
             state = 1;
 
+            // creates objects for all online players
             for(let i = 0; i < data.playerNames.length; i++) {
                 onlinePlayers[i] = new OnlinePlayer(data.playerNames[i], data.playerAssets[i]);
             }
@@ -28,6 +31,7 @@ class LoginScreen {
 
     show() {
 
+        // drawing section
         this.usernameInp.position(((1920 / 2) * xmp) - 100, ((1080 / 2) * ymp) + 50);
         push();
         imageMode(CENTER);
@@ -38,6 +42,7 @@ class LoginScreen {
 
     requestUsername() {
 
+        // requests server if username is available
         if(this.usernameInp.value() !== '' && this.usernameInp.value() !== undefined && this.usernameInp.value() !== null) {
             socket.emit('usernameRequest', this.usernameInp.value());
         }

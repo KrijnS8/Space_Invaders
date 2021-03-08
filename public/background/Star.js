@@ -16,6 +16,7 @@ class Star {
 
     show() {
 
+        // drawing section
         noStroke();
         fill(this.color.R, this.color.G, this.color.B, 70);
         rect(this.x, this.y, this.size);
