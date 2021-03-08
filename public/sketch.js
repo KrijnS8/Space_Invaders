@@ -53,8 +53,6 @@ function setup() {
     loginScreen = new LoginScreen();
 
     socket.on('spawnHostileCue', spawnHostile);
-
-    //player = new Player();
 }
 
 function draw() {

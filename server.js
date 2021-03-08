@@ -29,7 +29,6 @@ function newConnection(socket) {
             userNames.push(data)
             users.push(socket.id);
         }
-
     });
 
     socket.on('disconnect', () => {

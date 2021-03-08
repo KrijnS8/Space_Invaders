@@ -2,7 +2,7 @@ class LoginScreen {
 
     constructor() {
 
-        this.textSize = 1000;
+        this.textSize = 1200;
 
         this.state0 = enterNameText[0];
         this.state0.resize(this.textSize, 0);
@@ -24,7 +24,7 @@ class LoginScreen {
 
     show() {
 
-        this.usernameInp.position(((1920 / 2) * xmp) - 100, (1080 / 2) * ymp);
+        this.usernameInp.position(((1920 / 2) * xmp) - 100, ((1080 / 2) * ymp) + 50);
         push();
         imageMode(CENTER);
         translate((1920 / 2) * xmp, 400 * ymp);
