@@ -23,6 +23,8 @@ class Monster {
     }
 
     sendData(socketID) {
+
+        // sends data
         let data = {
             socketID: socketID,
             x: this.x,

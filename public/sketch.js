@@ -30,6 +30,7 @@ let animationInterval = setInterval(function () { animationState = animationStat
 
 function preload() {
 
+    // loads in all assets
     for (let i = 0; i < 5; i++) {
         shipsImgState0[i] = loadImage(`assets/ship${i}/state0.png`);
         shipsImgState1[i] = loadImage(`assets/ship${i}/state1.png`);
@@ -44,40 +45,49 @@ function preload() {
 
 function setup() {
 
+    // connects to localhost
     socket = io.connect('http://localhost:3000');
     createCanvas(window.innerWidth, window.innerHeight);
 
     console.log('xmp = ' + xmp + ' and ymp = ' + ymp);
 
+    // creates background stars
     for (let i = 0; i < starsAmount; i++) {
         stars[i] = new Star();
     }
 
+    // creates login screen object
     loginScreen = new LoginScreen();
 
+    // runs spawnHostile function
     socket.on('spawnHostileCue', spawnHostile);
 
+    // adds new player object
     socket.on('newPlayerJoin', (data) => {
         onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
         console.log(`${data.username} just joined the game!`);
     });
 
+    // runs shoot() function for correct player
     socket.on('shootReceive', (data) => {
         for(let i = 0; i < onlinePlayers.length; i++) {
             if(onlinePlayers[i].username === data) onlinePlayers[i].shoot();
         }
     })
 
+    // runs sendData() function for all monsters
     socket.on('requestMonsters', (socketID) => {
         for(let i = 0; i < monsters.length; i++) {
             monsters[i].sendData(socketID);
         }
     });
 
+    // creates new monster object
     socket.on('monsterReceived', (data) => {
         monsters.push(new Monster(data.y, data.x, data.asset));
     });
 
+    // removes player object when disconnected
     socket.on('playerDisconnect', (data) => {
         for(let i = 0; i < onlinePlayers.length; i++) {
             if(onlinePlayers[i].username === data) {
@@ -92,7 +102,6 @@ function setup() {
 function draw() {
 
     background(0);
-
     for (let i = 0; i < starsAmount; i++) {
         stars[i].show();
     }
@@ -101,6 +110,7 @@ function draw() {
 
     if(state === 1) {
 
+        //detects when bullet hits monster
         for (let m = 0; m < monsters.length; m++) {
             for (let b = 0; b < bullets.length; b++) {
                 if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
@@ -122,6 +132,7 @@ function draw() {
 
 function spawnHostile() {
 
+    //spawns new hostile row
     if(state === 1) {
 
         for (let i = 0; i < monsters.length; i++) {
@@ -137,26 +148,32 @@ function spawnHostile() {
 
 function keyPressed() {
 
+    // detects up arrow key press
     if (keyCode === UP_ARROW || keyCode === 87) {
         upPressed = true;
     }
 
+    // detects down arrow key press
     if (keyCode === DOWN_ARROW || keyCode === 83) {
         downPressed = true;
     }
 
+    // detects left arrow key press
     if (keyCode === LEFT_ARROW || keyCode === 65) {
         leftPressed = true;
     }
 
+    // detects right arrow key press
     if (keyCode === RIGHT_ARROW || keyCode === 68) {
         rightPressed = true;
     }
 
+    // detects space bar key press
     if (keyCode === 32) {
         localPlayer.shoot();
     }
 
+    // detects enter key press
     if(keyCode === ENTER && state === 0) {
         loginScreen.requestUsername();
     }
@@ -165,18 +182,22 @@ function keyPressed() {
 
 function keyReleased() {
 
+    // detects up arrow key release
     if (keyCode === UP_ARROW || keyCode === 87) {
         upPressed = false;
     }
 
+    // detects down arrow key release
     if (keyCode === DOWN_ARROW || keyCode === 83) {
         downPressed = false;
     }
 
+    // detects left arrow key release
     if (keyCode === LEFT_ARROW || keyCode === 65) {
         leftPressed = false;
     }
 
+    // detects right arrow key release
     if (keyCode === RIGHT_ARROW || keyCode === 68) {
         rightPressed = false;
     }
@@ -184,6 +205,8 @@ function keyReleased() {
 
 
 function windowResized() {
+
+    // resizes canvas when user resizes window
     resizeCanvas(window.innerWidth, window.innerHeight);
     xmp = window.innerWidth / 1920;
     ymp = window.innerHeight / 1080;

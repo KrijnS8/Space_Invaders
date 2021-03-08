@@ -13,6 +13,7 @@ class OnlinePlayer {
         this.state1 = shipsImgState1[this.asset];
         this.state1.resize(this.size, 0);
 
+        // receives location data
         socket.on('playerLocationReceive', (data) => {
 
             if(data.username === this.username) {
@@ -35,6 +36,7 @@ class OnlinePlayer {
 
     shoot() {
 
+        // creates new laser object
         bullets.push(new Laser(this.x, this.y));
     }
 }
