@@ -12,13 +12,17 @@ class LoginScreen {
         this.usernameInp = createInput('');
         this.usernameInp.size(200, 20);
 
-        socket.on('usernameDeclined', (data) => { console.log(`username ${data} has been declined!`); });
+        socket.on('usernameDeclined', (data) => { console.log(`username ${data.username} has been declined!`); });
         socket.on('usernameAccepted', (data) => {
 
-            username = data;
+            username = data.username;
             this.usernameInp.remove();
-            player = new Player();
+            localPlayer = new LocalPlayer(data.asset);
             state = 1;
+
+            for(let i = 0; i < data.playerNames.length; i++) {
+                onlinePlayers[i] = new OnlinePlayer(data.playerNames[i], data.playerAssets[i]);
+            }
         });
     }
 

@@ -1,5 +1,6 @@
 let userNames = [];
 let users = [];
+let userAssets = [];
 
 let express = require('express');
 
@@ -20,16 +21,37 @@ function newConnection(socket) {
 
     console.log(`Connected: ${socket.id}`);
 
+    let asset = Math.floor(Math.random() * 5);
+
+
     socket.on('usernameRequest', (data) => {
 
-        socket.emit(userNames.includes(data) ? 'usernameDeclined' : 'usernameAccepted', data);
+        socket.emit(userNames.includes(data) ? 'usernameDeclined' : 'usernameAccepted', {
+            username: data,
+            asset: asset,
+            playerNames: userNames,
+            playerAssets: userAssets
+        });
 
         if(!userNames.includes(data)) {
 
             userNames.push(data)
             users.push(socket.id);
+            userAssets.push(asset);
+
+            socket.broadcast.emit('newPlayerJoin', {
+                username: data,
+                asset: asset
+            });
         }
     });
+
+
+    socket.on('playerLocationSend', (data) => {
+
+        socket.broadcast.emit('playerLocationReceive', data);
+    });
+
 
     socket.on('disconnect', () => {
 
@@ -37,6 +59,8 @@ function newConnection(socket) {
 
         for(let i = 0; i < users.length; i++) {
             if(socket.id === users[i]) {
+                socket.broadcast.emit('playerDisconnect', userNames[i]);
+
                 console.log(`User: ${userNames[i]} has disconnected`);
                 users.splice(i, 1);
                 userNames.splice(i, 1);

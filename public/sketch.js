@@ -9,7 +9,8 @@ let enterNameText = [];
 let loginScreen;
 
 let username;
-let player;
+let localPlayer;
+let onlinePlayers = [];
 let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
@@ -26,6 +27,7 @@ let monstersImgState1 = [];
 let animationState = 0;
 let animationInterval = setInterval(function () { animationState = animationState === 0 ? 1 : 0 }, 500);
 
+
 function preload() {
 
     for (let i = 0; i < 5; i++) {
@@ -38,6 +40,7 @@ function preload() {
     enterNameText[0] = loadImage(`assets/enterName/state0.png`);
     enterNameText[1] = loadImage(`assets/enterName/state1.png`);
 }
+
 
 function setup() {
 
@@ -52,8 +55,23 @@ function setup() {
 
     loginScreen = new LoginScreen();
 
-    socket.on('spawnHostileCue', spawnHostile);
+    //socket.on('spawnHostileCue', spawnHostile);
+
+    socket.on('newPlayerJoin', (data) => {
+        onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
+        console.log(`${data.username} just joined the game!`);
+    });
+
+    socket.on('playerDisconnect', (data) => {
+        for(let i = 0; i < onlinePlayers.length; i++) {
+            if(onlinePlayers[i].username === data) {
+                onlinePlayers.splice(i, 1);
+                console.log('player disconnected');
+            }
+        }
+    });
 }
+
 
 function draw() {
 
@@ -67,8 +85,6 @@ function draw() {
 
     if(state === 1) {
 
-        player.show();
-
         for (let m = 0; m < monsters.length; m++) {
             for (let b = 0; b < bullets.length; b++) {
                 if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
@@ -76,9 +92,14 @@ function draw() {
                     bullets.splice(b, 1);
                 }
             }
-
             monsters[m].show();
         }
+
+        for(let i = 0; i < onlinePlayers.length; i++) {
+            onlinePlayers[i].show();
+        }
+
+        localPlayer.show();
     }
 }
 
@@ -96,6 +117,7 @@ function spawnHostile() {
         }
     }
 }
+
 
 function keyPressed() {
 
@@ -116,13 +138,14 @@ function keyPressed() {
     }
 
     if (keyCode === 32) {
-        player.shoot();
+        localPlayer.shoot();
     }
 
     if(keyCode === ENTER && state === 0) {
         loginScreen.requestUsername();
     }
 }
+
 
 function keyReleased() {
 
@@ -142,6 +165,7 @@ function keyReleased() {
         rightPressed = false;
     }
 }
+
 
 function windowResized() {
     resizeCanvas(window.innerWidth, window.innerHeight);

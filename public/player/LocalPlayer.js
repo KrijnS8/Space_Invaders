@@ -1,12 +1,12 @@
-class Player {
+class LocalPlayer {
 
     // noinspection DuplicatedCode
-    constructor() {
+    constructor(asset) {
 
         this.x = 200;
         this.y = 1080 / 2;
         this.size = 120;
-        this.asset = Math.floor(random(0, shipsImgState0.length));
+        this.asset = asset;
         this.state0 = shipsImgState0[this.asset];
         this.state0.resize(this.size, 0);
         this.state1 = shipsImgState1[this.asset];
@@ -48,6 +48,12 @@ class Player {
         } else if (this.y > 1080 - (this.size / 2)) {
             this.y = 1080 - (this.size / 2);
         }
+
+        socket.emit('playerLocationSend', {
+            username: username,
+            y: this.y,
+            isMoving: (upPressed === true || downPressed === true)
+        });
     }
 
     shoot() {
