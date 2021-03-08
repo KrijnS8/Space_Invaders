@@ -5,7 +5,7 @@ class Player {
 
         this.x = 200;
         this.y = 1080 / 2;
-        this.size = 75;
+        this.size = 120;
         this.asset = Math.floor(random(0, shipsImgState0.length));
         this.state0 = shipsImgState0[this.asset];
         this.state0.resize(this.size, 0);
@@ -48,8 +48,6 @@ class Player {
         } else if (this.y > 1080 - (this.size / 2)) {
             this.y = 1080 - (this.size / 2);
         }
-
-
     }
 
     shoot() {

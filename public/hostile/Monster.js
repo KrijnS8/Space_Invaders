@@ -4,7 +4,7 @@ class Monster {
 
         this.x = 1920 - 100;
         this.y = y + ((1080 / 8) / 2);
-        this.size = 70;
+        this.size = 100;
         this.asset = Math.floor(random(0, monstersImgState0.length));
         this.state0 = monstersImgState0[this.asset];
         this.state0.resize(this.size, 0);
