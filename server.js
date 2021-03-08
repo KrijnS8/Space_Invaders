@@ -39,6 +39,8 @@ function newConnection(socket) {
             users.push(socket.id);
             userAssets.push(asset);
 
+            socket.broadcast.to(users[0]).emit('requestMonsters', socket.id);
+
             socket.broadcast.emit('newPlayerJoin', {
                 username: data,
                 asset: asset
@@ -47,10 +49,18 @@ function newConnection(socket) {
     });
 
 
+    socket.on('monster', (data) => {
+        socket.broadcast.to(data.socketID).emit('monsterReceived', data);
+    });
+
+
     socket.on('playerLocationSend', (data) => {
 
         socket.broadcast.emit('playerLocationReceive', data);
     });
+
+
+    socket.on('shootSend', (data) => { socket.broadcast.emit('shootReceive', data) });
 
 
     socket.on('disconnect', () => {

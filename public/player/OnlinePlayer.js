@@ -32,4 +32,9 @@ class OnlinePlayer {
         image(this.isMoving ? this.state1 : this.state0, 0, 0);
         pop();
     }
+
+    shoot() {
+
+        bullets.push(new Laser(this.x, this.y));
+    }
 }

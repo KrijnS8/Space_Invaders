@@ -59,5 +59,7 @@ class LocalPlayer {
     shoot() {
 
         bullets.push(new Laser(this.x, this.y));
+
+        socket.emit('shootSend', username);
     }
 }

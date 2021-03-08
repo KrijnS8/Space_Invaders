@@ -55,11 +55,27 @@ function setup() {
 
     loginScreen = new LoginScreen();
 
-    //socket.on('spawnHostileCue', spawnHostile);
+    socket.on('spawnHostileCue', spawnHostile);
 
     socket.on('newPlayerJoin', (data) => {
         onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
         console.log(`${data.username} just joined the game!`);
+    });
+
+    socket.on('shootReceive', (data) => {
+        for(let i = 0; i < onlinePlayers.length; i++) {
+            if(onlinePlayers[i].username === data) onlinePlayers[i].shoot();
+        }
+    })
+
+    socket.on('requestMonsters', (socketID) => {
+        for(let i = 0; i < monsters.length; i++) {
+            monsters[i].sendData(socketID);
+        }
+    });
+
+    socket.on('monsterReceived', (data) => {
+        monsters.push(new Monster(data.y, data.x, data.asset));
     });
 
     socket.on('playerDisconnect', (data) => {
@@ -113,7 +129,7 @@ function spawnHostile() {
         }
 
         for (let i = 0; i < 12; i++) {
-            monsters.push(new Monster((1080 / 8) * i));
+            monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
         }
     }
 }
