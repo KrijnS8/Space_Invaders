@@ -26,6 +26,11 @@ class LoginScreen {
             for(let i = 0; i < data.playerNames.length; i++) {
                 onlinePlayers[i] = new OnlinePlayer(data.playerNames[i], data.playerAssets[i]);
             }
+
+            // creates all GUI objects
+            for(let i = 0; i < 5; i++) {
+                shipSelectionButtons[i] = new ShipSelectionButton(i);
+            }
         });
     }
 

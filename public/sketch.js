@@ -7,6 +7,7 @@ let starsAmount = window.innerHeight;
 let state = 0;
 let enterNameText = [];
 let loginScreen;
+let shipSelectionButtons = [];
 
 let username;
 let localPlayer;
@@ -60,7 +61,7 @@ function setup() {
     loginScreen = new LoginScreen();
 
     // runs spawnHostile function
-    socket.on('spawnHostileCue', spawnHostile);
+    //socket.on('spawnHostileCue', spawnHostile);
 
     // adds new player object
     socket.on('newPlayerJoin', (data) => {
@@ -119,6 +120,12 @@ function draw() {
         }
 
         localPlayer.show();
+
+        for(let i = 0; i < shipSelectionButtons.length; i++) {
+            shipSelectionButtons[i].show();
+        }
+
+
     }
 }
 
@@ -132,7 +139,7 @@ function spawnHostile() {
             monsters[i].x -= 100;
         }
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 8; i++) {
             monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
         }
     }

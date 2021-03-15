@@ -3,7 +3,7 @@ class LocalPlayer {
     // noinspection DuplicatedCode
     constructor(asset) {
 
-        this.x = 200;
+        this.x = 250;
         this.y = 1080 / 2;
         this.size = 120;
         this.asset = asset;
