@@ -68,13 +68,6 @@ function setup() {
         console.log(`${data.username} just joined the game!`);
     });
 
-    // runs shoot() function for correct player
-    socket.on('shootReceive', (data) => {
-        for(let i = 0; i < onlinePlayers.length; i++) {
-            if(onlinePlayers[i].username === data) onlinePlayers[i].shoot();
-        }
-    })
-
     // runs sendData() function for all monsters
     socket.on('requestMonsters', (socketID) => {
         for(let i = 0; i < monsters.length; i++) {

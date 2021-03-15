@@ -21,6 +21,13 @@ class OnlinePlayer {
                 this.isMoving = data.isMoving;
             }
         });
+
+        // receives shoot cue
+        socket.on('shootReceive', (data) => {
+            if(this.username === data && state === 1) {
+                bullets.push(new Laser(this.x, this.y));
+            }
+        });
     }
 
     show() {
@@ -37,6 +44,6 @@ class OnlinePlayer {
     shoot() {
 
         // creates new laser object
-        bullets.push(new Laser(this.x, this.y));
+
     }
 }
