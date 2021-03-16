@@ -31,6 +31,7 @@ class LoginScreen {
             for(let i = 0; i < 5; i++) {
                 shipSelectionButtons[i] = new ShipSelectionButton(i);
             }
+            shipSelectionBox = new ShipSelectionBox();
         });
     }
 

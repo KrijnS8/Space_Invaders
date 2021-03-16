@@ -5,7 +5,7 @@ class OnlinePlayer {
         this.username = username;
         this.x = 250;
         this.y = 1080 / 2;
-        this.size = 120;
+        this.size = 80;
         this.asset = asset;
         this.isMoving = 0;
         this.state0 = shipsImgState0[this.asset];

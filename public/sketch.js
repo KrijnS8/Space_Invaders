@@ -8,6 +8,9 @@ let state = 0;
 let enterNameText = [];
 let loginScreen;
 let shipSelectionButtons = [];
+let shipSelectionAssetsState0 = [];
+let shipSelectionAssetsState1 = [];
+let shipSelectionBox;
 
 let username;
 let localPlayer;
@@ -35,6 +38,8 @@ function preload() {
     for (let i = 0; i < 5; i++) {
         shipsImgState0[i] = loadImage(`assets/ship${i}/state0.png`);
         shipsImgState1[i] = loadImage(`assets/ship${i}/state1.png`);
+        shipSelectionAssetsState0[i] = loadImage(`assets/ship${i}/state0.png`);
+        shipSelectionAssetsState1[i] = loadImage(`assets/ship${i}/state1.png`);
         monstersImgState0[i] = loadImage(`assets/monster${i}/state0.png`);
         monstersImgState1[i] = loadImage(`assets/monster${i}/state1.png`);
     }
@@ -124,6 +129,7 @@ function draw() {
         for(let i = 0; i < shipSelectionButtons.length; i++) {
             shipSelectionButtons[i].show();
         }
+        shipSelectionBox.show();
 
 
     }
@@ -136,7 +142,7 @@ function spawnHostile() {
     if(state === 1) {
 
         for (let i = 0; i < monsters.length; i++) {
-            monsters[i].x -= 100;
+            monsters[i].x -= 120;
         }
 
         for (let i = 0; i < 8; i++) {
