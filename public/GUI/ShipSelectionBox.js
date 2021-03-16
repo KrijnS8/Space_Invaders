@@ -8,6 +8,9 @@ class ShipSelectionBox {
     show() {
 
         stroke(255);
-        line(0, 240 * ymp, window.innerWidth, 240 * ymp);
+        strokeWeight(2);
+        line(0, 240 * ymp, 100, 240 * ymp);
+        line(0, 840 * ymp, 100, 840 * ymp);
+        line(100, 240 * ymp, 100, 840 * ymp);
     }
 }

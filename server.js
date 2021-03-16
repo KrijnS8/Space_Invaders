@@ -62,6 +62,13 @@ function newConnection(socket) {
     });
 
 
+    // receives changed asset and sends it to all clients
+    socket.on('changeAssetSend', (data) => {
+
+        socket.broadcast.emit('changeAssetReceive', data);
+    });
+
+
     // receives shoot cue and sends it to all clients
     socket.on('shootSend', (data) => { socket.broadcast.emit('shootReceive', data) });
 

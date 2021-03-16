@@ -209,6 +209,13 @@ function keyReleased() {
     }
 }
 
+function mouseReleased() {
+
+    for(let i = 0; i < shipSelectionButtons.length; i++) {
+        shipSelectionButtons[i].trigger();
+    }
+}
+
 
 function windowResized() {
 

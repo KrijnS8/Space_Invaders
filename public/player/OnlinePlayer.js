@@ -22,6 +22,17 @@ class OnlinePlayer {
             }
         });
 
+        // receives asset data
+        socket.on('changeAssetReceive', (data) => {
+            if(this.username === data.username) {
+
+                this.state0 = shipsImgState0[data.asset];
+                this.state0.resize(this.size, 0);
+                this.state1 = shipsImgState1[data.asset];
+                this.state1.resize(this.size, 0);
+            }
+        })
+
         // receives shoot cue
         socket.on('shootReceive', (data) => {
             if(this.username === data && state === 1) {
