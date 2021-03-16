@@ -21,7 +21,7 @@ class ShipSelectionButton {
         push();
         imageMode(CENTER);
         translate(this.xPos(), this.yPos());
-        if(this.hitbox() && mouseIsPressed) tint(180);
+        if(this.hitbox() && mouseIsPressed) tint(150);
         image(this.hitbox() ? this.state1 : this.state0, 0, 0);
         pop();
     }

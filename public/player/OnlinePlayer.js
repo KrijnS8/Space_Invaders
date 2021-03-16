@@ -7,6 +7,7 @@ class OnlinePlayer {
         this.y = 1080 / 2;
         this.size = 80;
         this.asset = asset;
+        console.log(asset);
         this.isMoving = 0;
         this.state0 = shipsImgState0[this.asset];
         this.state0.resize(this.size, 0);
@@ -47,8 +48,17 @@ class OnlinePlayer {
         push();
         imageMode(CENTER);
         translate(this.x * xmp, this.y * ymp);
+
+        push();
         rotate(PI / 2);
         image(this.isMoving ? this.state1 : this.state0, 0, 0);
+        pop();
+
+        noStroke();
+        fill(255, 255, 255, 75);
+        textAlign(CENTER);
+        textSize(20);
+        text(this.username, 0, 60);
         pop();
     }
 

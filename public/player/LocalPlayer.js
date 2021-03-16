@@ -29,8 +29,17 @@ class LocalPlayer {
         push();
         imageMode(CENTER);
         translate(this.x * xmp, this.y * ymp);
+
+        push();
         rotate(PI / 2);
         image(upPressed === true || downPressed === true ? this.state1 : this.state0, 0, 0);
+        pop();
+
+        noStroke();
+        fill(255, 255, 255, 75);
+        textAlign(CENTER);
+        textSize(20);
+        text(username, 0, 60);
         pop();
 
 
