@@ -6,12 +6,11 @@ class OnlinePlayer {
         this.x = 250;
         this.y = 1080 / 2;
         this.size = 100;
-        this.asset = asset;
         console.log(asset);
         this.isMoving = 0;
-        this.state0 = shipsImgState0[this.asset];
+        this.state0 = shipsImgState0[asset];
         this.state0.resize(this.size, 0);
-        this.state1 = shipsImgState1[this.asset];
+        this.state1 = shipsImgState1[asset];
         this.state1.resize(this.size, 0);
 
         // receives location data
@@ -37,7 +36,7 @@ class OnlinePlayer {
         // receives shoot cue
         socket.on('shootReceive', (data) => {
             if(this.username === data && state === 1) {
-                bullets.push(new Laser(this.x, this.y));
+                bullets.push(new Laser(this.x, this.y, data));
             }
         });
     }

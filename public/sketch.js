@@ -66,12 +66,14 @@ function setup() {
     loginScreen = new LoginScreen();
 
     // runs spawnHostile function
-    //socket.on('spawnHostileCue', spawnHostile);
+    socket.on('spawnHostileCue', spawnHostile);
 
     // adds new player object
     socket.on('newPlayerJoin', (data) => {
-        onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
-        console.log(`${data.username} just joined the game!`);
+        if(state === 1) {
+            onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
+            console.log(`${data.username} just joined the game!`);
+        }
     });
 
     // runs sendData() function for all monsters
