@@ -5,7 +5,7 @@ class OnlinePlayer {
         this.username = username;
         this.x = 250;
         this.y = 1080 / 2;
-        this.size = 80;
+        this.size = 100;
         this.asset = asset;
         console.log(asset);
         this.isMoving = 0;
@@ -57,8 +57,8 @@ class OnlinePlayer {
         noStroke();
         fill(255, 255, 255, 75);
         textAlign(CENTER);
-        textSize(20);
-        text(this.username, 0, 60);
+        textSize(25);
+        text(this.username, 0, 80);
         pop();
     }
 

@@ -2,12 +2,12 @@ class ShipSelectionButton {
 
     constructor(asset) {
 
-        this.x = 60;
-        this.y = ((1080 / 9) * (asset + 2)) + ((1080 / 9) / 2);
+        this.x = 50;
+        this.y = ((1080 / 11) * (asset + 3)) + ((1080 / 11) / 2);
         this.xPos = () => this.x * xmp;
         this.yPos = () => this.y * ymp;
-        this.size = 50;
-        this.hitboxSize = 40;
+        this.size = 60;
+        this.hitboxSize = 50;
         this.asset = asset;
 
         this.state0 = shipSelectionAssetsState0[asset];

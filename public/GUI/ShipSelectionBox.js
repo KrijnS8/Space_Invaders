@@ -9,8 +9,8 @@ class ShipSelectionBox {
 
         stroke(255);
         strokeWeight(2);
-        line(0, 240 * ymp, 100, 240 * ymp);
-        line(0, 840 * ymp, 100, 840 * ymp);
-        line(100, 240 * ymp, 100, 840 * ymp);
+        line(0, ((1080 / 11) * 3) * ymp, 100 * xmp, ((1080 / 11) * 3) * ymp);
+        line(0, ((1080 / 11) * 8) * ymp, 100 * xmp, ((1080 / 11) * 8) * ymp);
+        line(100 * xmp, ((1080 / 11) * 3) * ymp, 100 * xmp, ((1080 / 11) * 8) * ymp);
     }
 }

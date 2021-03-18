@@ -5,7 +5,7 @@ class LocalPlayer {
 
         this.x = 250;
         this.y = 1080 / 2;
-        this.size = 80;
+        this.size = 100;
         this.state0 = shipsImgState0[asset];
         this.state0.resize(this.size, 0);
         this.state1 = shipsImgState1[asset];
@@ -38,8 +38,8 @@ class LocalPlayer {
         noStroke();
         fill(255, 255, 255, 75);
         textAlign(CENTER);
-        textSize(20);
-        text(username, 0, 60);
+        textSize(25);
+        text(username, 0, 80);
         pop();
 
 
