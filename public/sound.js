@@ -22,7 +22,6 @@ Tone.Transport.bpm.value = 90;
 Tone.Transport.setLoopPoints(0, '16m');
 Tone.Transport.loop = true;
 
-
 // main sound loop
 const loop = new Tone.Loop(time => {
 
