@@ -1,7 +1,8 @@
 class Laser {
 
-    constructor(x, y) {
+    constructor(x, y, username) {
 
+        this.username = username;
         this.x = x;
         this.y = y;
         this.width = 50;

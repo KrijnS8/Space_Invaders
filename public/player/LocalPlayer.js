@@ -20,7 +20,6 @@ class LocalPlayer {
 
             if (bullets[i].x > 1920) {
                 bullets.splice(i, 1);
-                console.log(bullets);
             }
         }
 
@@ -36,7 +35,7 @@ class LocalPlayer {
         pop();
 
         noStroke();
-        fill(255, 255, 255, 75);
+        fill(51, 255, 51, 75);
         textAlign(CENTER);
         textSize(25);
         text(username, 0, 80);

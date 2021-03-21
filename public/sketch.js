@@ -20,6 +20,8 @@ let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
 let bullets = [];
+let score = 0;
+let scoreCounter;
 
 let monsters = [];
 
@@ -66,12 +68,14 @@ function setup() {
     loginScreen = new LoginScreen();
 
     // runs spawnHostile function
-    //socket.on('spawnHostileCue', spawnHostile);
+    socket.on('spawnHostileCue', spawnHostile);
 
     // adds new player object
     socket.on('newPlayerJoin', (data) => {
-        onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
-        console.log(`${data.username} just joined the game!`);
+        if(state === 1) {
+            onlinePlayers.push(new OnlinePlayer(data.username, data.asset));
+            console.log(`${data.username} just joined the game!`);
+        }
     });
 
     // runs sendData() function for all monsters
@@ -112,12 +116,20 @@ function draw() {
         //detects when bullet hits monster
         for (let m = 0; m < monsters.length; m++) {
             for (let b = 0; b < bullets.length; b++) {
-                if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
-                    monsters.splice(m, 1);
-                    bullets.splice(b, 1);
+                if(bullets[b] !== undefined && monsters[m] !== undefined) {
+                    if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
+                        monsters.splice(m, 1);
+                        bullets.splice(b, 1);
+
+                        if(scoreCounter !== undefined) {
+                            score++;
+                        }
+                    }
                 }
             }
-            monsters[m].show();
+            if(monsters[m] !== undefined) {
+                monsters[m].show();
+            }
         }
 
         for(let i = 0; i < onlinePlayers.length; i++) {
@@ -131,6 +143,9 @@ function draw() {
         }
         shipSelectionBox.show();
 
+        if(scoreCounter !== undefined) {
+            scoreCounter.show();
+        }
 
     }
 }
@@ -141,12 +156,24 @@ function spawnHostile() {
     //spawns new hostile row
     if(state === 1) {
 
-        for (let i = 0; i < monsters.length; i++) {
-            monsters[i].x -= 120;
+        if(monsters[0] === undefined) {
+            for (let i = 0; i < 8; i++) {
+                monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+            }
+            for (let i = 0; i < monsters.length; i++) {
+                monsters[i].x -= 120;
+            }
+            return;
         }
 
-        for (let i = 0; i < 8; i++) {
-            monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+        if(monsters[0].x > 380) {
+            for (let i = 0; i < 8; i++) {
+                monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+                //console.log(monsters[0].x);
+            }
+            for (let i = 0; i < monsters.length; i++) {
+                monsters[i].x -= 120;
+            }
         }
     }
 }
@@ -175,7 +202,7 @@ function keyPressed() {
     }
 
     // detects space bar key press
-    if (keyCode === 32) {
+    if (keyCode === 32 && state === 1) {
         localPlayer.shoot();
     }
 
