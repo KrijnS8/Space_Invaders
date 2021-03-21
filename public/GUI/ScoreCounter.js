@@ -2,8 +2,8 @@ class ScoreCounter {
 
     constructor() {
 
-        this.x = 50;
-        this.y = 75;
+        this.x = 25;
+        this.y = 25;
     }
 
     show() {
@@ -11,7 +11,7 @@ class ScoreCounter {
         push();
         translate(this.x * xmp, this.y * ymp);
         fill(255);
-        textAlign(LEFT);
+        textAlign(LEFT, TOP);
         textSize(50);
         text(score, 0, 0);
         pop();
