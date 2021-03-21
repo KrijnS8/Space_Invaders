@@ -2,7 +2,7 @@ class Monster {
 
     constructor(y, x, asset) {
 
-        this.x = x || 1920 - 100;
+        this.x = x || 1920 + 20;
         this.y = y;
         this.size = 100;
         this.asset = asset || Math.floor(random(0, monstersImgState0.length));

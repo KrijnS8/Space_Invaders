@@ -156,12 +156,24 @@ function spawnHostile() {
     //spawns new hostile row
     if(state === 1) {
 
-        for (let i = 0; i < monsters.length; i++) {
-            monsters[i].x -= 120;
+        if(monsters[0] === undefined) {
+            for (let i = 0; i < 8; i++) {
+                monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+            }
+            for (let i = 0; i < monsters.length; i++) {
+                monsters[i].x -= 120;
+            }
+            return;
         }
 
-        for (let i = 0; i < 8; i++) {
-            monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+        if(monsters[0].x > 380) {
+            for (let i = 0; i < 8; i++) {
+                monsters.push(new Monster(((1080 / 8) * i) + ((1080 / 8) / 2)));
+                //console.log(monsters[0].x);
+            }
+            for (let i = 0; i < monsters.length; i++) {
+                monsters[i].x -= 120;
+            }
         }
     }
 }
