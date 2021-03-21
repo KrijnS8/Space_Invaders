@@ -16,6 +16,8 @@ class LoginScreen {
         socket.on('usernameDeclined', (data) => { console.log(`username ${data.username} has been declined!`); });
         socket.on('usernameAccepted', (data) => {
 
+            Tone.start();
+
             // sets username and creates local player object
             username = data.username;
             this.usernameInp.remove();
@@ -32,6 +34,7 @@ class LoginScreen {
                 shipSelectionButtons[i] = new ShipSelectionButton(i);
             }
             shipSelectionBox = new ShipSelectionBox();
+            createClock();
         });
     }
 

@@ -20,6 +20,8 @@ let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
 let bullets = [];
+let score = 0;
+let scoreCounter;
 
 let monsters = [];
 
@@ -114,12 +116,20 @@ function draw() {
         //detects when bullet hits monster
         for (let m = 0; m < monsters.length; m++) {
             for (let b = 0; b < bullets.length; b++) {
-                if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
-                    monsters.splice(m, 1);
-                    bullets.splice(b, 1);
+                if(bullets[b] !== undefined && monsters[m] !== undefined) {
+                    if (bullets[b].y > monsters[m].y - (monsters[m].size / 2) && bullets[b].y < monsters[m].y + (monsters[m].size / 2) && bullets[b].x > monsters[m].x) {
+                        monsters.splice(m, 1);
+                        bullets.splice(b, 1);
+
+                        if(scoreCounter !== undefined) {
+                            score++;
+                        }
+                    }
                 }
             }
-            monsters[m].show();
+            if(monsters[m] !== undefined) {
+                monsters[m].show();
+            }
         }
 
         for(let i = 0; i < onlinePlayers.length; i++) {
@@ -133,6 +143,9 @@ function draw() {
         }
         shipSelectionBox.show();
 
+        if(scoreCounter !== undefined) {
+            scoreCounter.show();
+        }
 
     }
 }

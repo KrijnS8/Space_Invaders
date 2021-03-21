@@ -20,7 +20,6 @@ class LocalPlayer {
 
             if (bullets[i].x > 1920) {
                 bullets.splice(i, 1);
-                console.log(bullets);
             }
         }
 

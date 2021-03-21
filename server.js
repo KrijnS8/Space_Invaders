@@ -3,9 +3,6 @@ let userNames = [];
 let users = [];
 let userAssets = [];
 
-let counter = 1;
-let bpm = 100;
-
 let express = require('express');
 
 let app = express();
@@ -96,8 +93,3 @@ function newConnection(socket) {
 
 // sets interval for monster spawning
 let spawnInterval = setInterval(() => { io.sockets.emit('spawnHostileCue') }, 2000);
-let counterInterval = setInterval(() => {
-    io.sockets.emit('counter', counter);
-    counter = counter < 16 ? counter + 1 : 1;
-
-}, 15000 / bpm);

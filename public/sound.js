@@ -1,22 +1,48 @@
-const drums = new Tone.Channel(-0.25);
-const reverb = new Tone.Reverb(0.5).toDestination(drums);
-const compression = new Tone.Compressor(-30, 3);
-const kick0 = new Tone.Player('assets/samples/kick.wav').connect(reverb).connect(compression).toDestination(drums);
-const kick1 = new Tone.Player('assets/samples/kick.wav').connect(reverb).connect(compression).toDestination(drums);
-const snare = new Tone.Player('assets/samples/snare.wav').connect(reverb).connect(compression).toDestination(drums);
+const intro = new Tone.Player('assets/samples/intro.wav').toDestination();
 
-socket = io.connect('http://localhost:3000');
+const drums = new Tone.Player('assets/samples/drums.wav').toDestination();
+drums.sync().start(0);
 
-// receives counter data
-socket.on('counter', (counter) => {
+const bassA = new Tone.Player('assets/samples/bass/bassA.wav').toDestination();
+bassA.sync().start(0);
+const bassG = new Tone.Player('assets/samples/bass/bassG.wav').toDestination();
+const bassF = new Tone.Player('assets/samples/bass/bassF.wav').toDestination();
 
-    if(state === 1) {
-        if(counter % 8 === 0) {
-            kick0.start();
-        }
-        if(counter % 8 === 4) {
-            kick1.start();
-            snare.start();
-        }
+const chordsA_0 = new Tone.Player('assets/samples/chords/chordsA_0.wav').toDestination();
+const chordsA_1 = new Tone.Player('assets/samples/chords/chordsA_1.wav').toDestination();
+const chordsG = new Tone.Player('assets/samples/chords/chordsG.wav').toDestination();
+const chordsF = new Tone.Player('assets/samples/chords/chordsF.wav').toDestination();
+
+const plucksA_0 = new Tone.Player('assets/samples/plucks/plucksA_0.wav').toDestination();
+const plucksA_1 = new Tone.Player('assets/samples/plucks/plucksA_1.wav').toDestination();
+const plucksG = new Tone.Player('assets/samples/plucks/plucksG.wav').toDestination();
+const plucksF = new Tone.Player('assets/samples/plucks/plucksF.wav').toDestination();
+
+const loop = new Tone.Loop(time => {
+
+    if(score > 10) {
+        plucksA_0.sync().start(0);
     }
-});
+}, '4m').start(0);
+
+Tone.Transport.bpm.value = 90;
+Tone.Transport.setLoopPoints(0, '4m');
+Tone.Transport.loop = true;
+
+function createClock() {
+
+    // intro timer
+    let introTimer = true;
+    const introClock = new Tone.Clock(time => {
+
+        if(introTimer) {
+            intro.start();
+            introTimer = false;
+        } else {
+            Tone.Transport.start();
+            scoreCounter = new ScoreCounter();
+            introClock.stop();
+        }
+    }, 90 / 60 / 24);
+    introClock.start();
+}
