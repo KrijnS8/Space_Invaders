@@ -3,7 +3,7 @@ class ScoreCounter {
     constructor() {
 
         this.x = 50;
-        this.y = 50;
+        this.y = 75;
     }
 
     show() {
