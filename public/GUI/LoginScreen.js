@@ -34,7 +34,7 @@ class LoginScreen {
                 shipSelectionButtons[i] = new ShipSelectionButton(i);
             }
             shipSelectionBox = new ShipSelectionBox();
-            createClock();
+            startSound();
         });
     }
 

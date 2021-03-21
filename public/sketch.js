@@ -190,7 +190,7 @@ function keyPressed() {
     }
 
     // detects space bar key press
-    if (keyCode === 32) {
+    if (keyCode === 32 && state === 1) {
         localPlayer.shoot();
     }
 

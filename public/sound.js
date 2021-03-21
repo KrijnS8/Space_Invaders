@@ -3,33 +3,53 @@ const intro = new Tone.Player('assets/samples/intro.wav').toDestination();
 const drums = new Tone.Player('assets/samples/drums.wav').toDestination();
 drums.sync().start(0);
 
-const bassA = new Tone.Player('assets/samples/bass/bassA.wav').toDestination();
-bassA.sync().start(0);
-const bassG = new Tone.Player('assets/samples/bass/bassG.wav').toDestination();
-const bassF = new Tone.Player('assets/samples/bass/bassF.wav').toDestination();
+const bass = new Tone.Player('assets/samples/bass.wav').toDestination();
+bass.sync().start(0);
 
-const chordsA_0 = new Tone.Player('assets/samples/chords/chordsA_0.wav').toDestination();
-const chordsA_1 = new Tone.Player('assets/samples/chords/chordsA_1.wav').toDestination();
-const chordsG = new Tone.Player('assets/samples/chords/chordsG.wav').toDestination();
-const chordsF = new Tone.Player('assets/samples/chords/chordsF.wav').toDestination();
+const chords = new Tone.Player('assets/samples/chords.wav').toDestination();
+let chordsSynced = false;
 
-const plucksA_0 = new Tone.Player('assets/samples/plucks/plucksA_0.wav').toDestination();
-const plucksA_1 = new Tone.Player('assets/samples/plucks/plucksA_1.wav').toDestination();
-const plucksG = new Tone.Player('assets/samples/plucks/plucksG.wav').toDestination();
-const plucksF = new Tone.Player('assets/samples/plucks/plucksF.wav').toDestination();
+const plucks = new Tone.Player('assets/samples/plucks.wav').toDestination();
+let plucksSynced = false;
 
-const loop = new Tone.Loop(time => {
+const synth = new Tone.Player('assets/samples/synth.wav').toDestination();
+let synthSynced = false;
 
-    if(score > 10) {
-        plucksA_0.sync().start(0);
-    }
-}, '4m').start(0);
+const allFX = new Tone.Player('assets/samples/allFX.wav').toDestination();
+let allFXSynced = false;
 
 Tone.Transport.bpm.value = 90;
-Tone.Transport.setLoopPoints(0, '4m');
+Tone.Transport.setLoopPoints(0, '16m');
 Tone.Transport.loop = true;
 
-function createClock() {
+
+// main sound loop
+const loop = new Tone.Loop(time => {
+
+    if(score > 100 && plucksSynced === false) {
+        plucks.sync().start(0);
+        plucksSynced = true;
+    }
+
+    if(score > 200 && chordsSynced === false) {
+        chords.sync().start(0);
+        chordsSynced = true;
+    }
+
+    if(score > 300 && allFXSynced === false) {
+        allFX.sync().start(0);
+        allFXSynced = true;
+    }
+
+    if(score > 400 && synthSynced === false) {
+        synth.sync().start(0);
+        synthSynced = true;
+    }
+
+}, '4m').start(0);
+
+
+function startSound() {
 
     // intro timer
     let introTimer = true;
